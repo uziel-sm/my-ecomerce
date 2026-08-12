@@ -1,4 +1,8 @@
 node_modules/
-db/marianee.db
-db/marianee.db-shm
-db/marianee.db-wal
+db/*.db
+db/*.db-shm
+db/*.db-wal
+db/*.sqlite*
+.env
+.env.*
+*.log
