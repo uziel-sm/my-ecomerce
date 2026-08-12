@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My e-comerce · Panel de administración</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="no-auth">
+
+<!-- ===================== LOGIN ===================== -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-badge">ME</div>
+      <h1>My e-comerce</h1>
+      <p class="muted">Inicia sesión para continuar</p>
+    </div>
+    <div class="login-error" id="login-error"></div>
+    <div class="form-group">
+      <label for="login-username">Usuario</label>
+      <input type="text" id="login-username" placeholder="Tu nombre de usuario" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label for="login-password">Contraseña</label>
+      <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary btn-block" id="btn-login">Entrar</button>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-badge">ME</div>
+      <div class="brand-text">
+        <span class="brand-name">My e-comerce</span>
+        <span class="brand-sub">Panel</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item nav-admin active" data-view="dashboard">
+        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item nav-admin" data-view="clientes">
+        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        <span>Clientes</span>
+      </button>
+      <button class="nav-item nav-admin" data-view="ventas">
+        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A.996.996 0 0 0 19.42 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <span>Ventas</span>
+      </button>
+      <button class="nav-item nav-admin" data-view="pagos">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+        <span>Pagos</span>
+      </button>
+      <button class="nav-item nav-admin" data-view="usuarios" id="nav-usuarios">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm7.76.91 1.29-1.13-1.5-2.6-1.63.34c-.32-.25-.68-.45-1.07-.58l-.23-1.64h-3l-.23 1.64c-.39.13-.75.34-1.07.58l-1.63-.34-1.5 2.6 1.29 1.13c-.08.35-.13.7-.13 1.07s.05.72.13 1.07l-1.29 1.13 1.5 2.6 1.63-.34c.32.25.68.45 1.07.58l.23 1.64h3l.23-1.64c.39-.13.75-.34 1.07-.58l1.63.34 1.5-2.6-1.29-1.13c.08-.35.13-.7.13-1.07s-.05-.72-.13-1.07zM16.5 17.5A2.5 2.5 0 0 1 14 15c0-1.38 1.12-2.5 2.5-2.5S19 13.62 19 15c0 1.38-1.12 2.5-1.5 2.5z"/></svg>
+        <span>Usuarios</span>
+      </button>
+      <button class="nav-item nav-cliente" data-view="micuenta" id="nav-micuenta">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2a9.2 9.2 0 0 1-6.71-2.82c.1-2.24 4.47-3.38 6.71-3.38s6.61 1.14 6.71 3.38A9.2 9.2 0 0 1 12 20.2z"/></svg>
+        <span>Mi cuenta</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p>My e-comerce</p>
+      <span>Panel interno · v1.0</span>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <h1 id="view-title">Inicio</h1>
+        <p id="view-subtitle" class="muted">Resumen general del negocio</p>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search" id="topbar-search-wrap">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="topbar-search" placeholder="Buscar por nombre o teléfono...">
+        </div>
+        <div class="user-chip">
+          <span class="user-chip-text">
+            <span class="user-chip-name" id="user-chip-name">—</span>
+            <span class="user-chip-rol" id="user-chip-rol"></span>
+          </span>
+          <button class="icon-btn icon-btn-light" id="btn-logout" title="Cerrar sesión">
+            <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ---------- VISTA: DASHBOARD ---------- -->
+    <section class="view active" id="view-dashboard">
+      <div class="dashboard-overview">
+        <div class="panel overview-panel">
+          <div class="panel-head">
+            <h3>Resumen rápido</h3>
+            <p class="muted">Indicadores clave para seguir el negocio sin saturar la vista.</p>
+          </div>
+          <div class="cards-grid" id="dashboard-cards"></div>
+        </div>
+
+        <div class="panel trend-panel">
+          <div class="panel-head">
+            <h3>Tendencia semanal</h3>
+            <p class="muted">Ventas de los últimos 7 días</p>
+          </div>
+          <div class="trend-chart" id="dashboard-trend"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-columns">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Últimas ventas</h3>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Cliente</th><th>Producto</th><th>Precio</th><th>Fecha</th></tr></thead>
+              <tbody id="dashboard-ventas-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Últimos pagos</h3>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Cliente</th><th>Pago</th><th>Estado</th><th>Fecha</th></tr></thead>
+              <tbody id="dashboard-pagos-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- VISTA: CLIENTES (lista) ---------- -->
+    <section class="view" id="view-clientes">
+      <div class="view-toolbar">
+        <p class="muted">Administra el registro de tus clientas y clientes.</p>
+        <button class="btn btn-primary" id="btn-nuevo-cliente">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
+          Nuevo cliente
+        </button>
+      </div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table class="responsive-table">
+            <thead><tr><th>Nombre</th><th>Teléfono</th><th>Compras</th><th>Total comprado</th><th>Pagos pendientes</th><th></th></tr></thead>
+            <tbody id="clientes-body"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="clientes-empty" hidden>Aún no hay clientes registrados. Agrega el primero con el botón de arriba.</p>
+      </div>
+    </section>
+
+    <!-- ---------- VISTA: DETALLE CLIENTE ---------- -->
+    <section class="view" id="view-cliente-detalle">
+      <button class="btn-back" id="btn-volver-clientes">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+        Volver a clientes
+      </button>
+
+      <div class="cliente-header panel">
+        <div class="cliente-avatar" id="cliente-avatar">MS</div>
+        <div class="cliente-info">
+          <h2 id="cliente-nombre">—</h2>
+          <p class="muted" id="cliente-telefono">—</p>
+        </div>
+        <div class="cliente-actions">
+          <button class="btn btn-secondary" id="btn-editar-cliente">Editar</button>
+          <button class="btn btn-danger" id="btn-eliminar-cliente">Eliminar</button>
+        </div>
+      </div>
+
+      <div class="cliente-summary panel">
+        <div class="cliente-summary-card">
+          <span class="muted">Total comprado</span>
+          <strong id="cliente-total-comprado">$0.00</strong>
+        </div>
+        <div class="cliente-summary-card">
+          <span class="muted">Total pagado</span>
+          <strong id="cliente-total-pagado">$0.00</strong>
+        </div>
+        <div class="cliente-summary-card">
+          <span class="muted">Saldo pendiente</span>
+          <strong id="cliente-saldo-pendiente">$0.00</strong>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="deuda">Resumen de deuda</button>
+        <button class="tab-btn" data-tab="operaciones">Operaciones</button>
+      </div>
+
+      <div class="panel tab-panel active" id="tab-deuda">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Producto</th><th>Precio</th><th>Pagado</th><th>Pendiente</th></tr></thead>
+            <tbody id="cliente-deuda-body"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="cliente-deuda-empty" hidden>Sin deudas pendientes.</p>
+      </div>
+
+      <div class="panel tab-panel" id="tab-operaciones">
+        <div class="operaciones-toolbar">
+          <button class="btn btn-primary" id="btn-nueva-venta-cliente">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
+            Agregar venta
+          </button>
+          <button class="btn btn-primary" id="btn-nuevo-pago-cliente">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
+            Registrar pago
+          </button>
+        </div>
+        <p class="muted">Desde aquí registra ventas y pagos sin salir del perfil del cliente.</p>
+      </div>
+    </section>
+
+    <!-- ---------- VISTA: VENTAS ---------- -->
+    <section class="view" id="view-ventas">
+      <div class="view-toolbar">
+        <input type="text" id="ventas-buscar-cliente" placeholder="Buscar venta por cliente o teléfono..." class="search-input">
+      </div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table class="responsive-table">
+            <thead><tr><th>Cliente</th><th>Teléfono</th><th>Producto</th><th>Precio</th><th>Fecha</th><th></th></tr></thead>
+            <tbody id="ventas-body"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="ventas-empty" hidden>No hay ventas para este filtro todavía.</p>
+      </div>
+    </section>
+
+    <!-- ---------- VISTA: PAGOS ---------- -->
+    <section class="view" id="view-pagos">
+      <div class="view-toolbar">
+        <input type="text" id="pagos-buscar-cliente" placeholder="Buscar pago por cliente o teléfono..." class="search-input">
+      </div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table class="responsive-table">
+            <thead><tr><th>Cliente</th><th>Pago</th><th>Forma</th><th>Método</th><th>Estado</th><th>Fecha</th><th></th></tr></thead>
+            <tbody id="pagos-body"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="pagos-empty" hidden>No hay pagos con este estado todavía.</p>
+      </div>
+    </section>
+
+    <!-- ---------- VISTA: MI CUENTA (cliente) ---------- -->
+    <section class="view" id="view-micuenta">
+      <div class="cliente-header panel">
+        <div class="cliente-avatar" id="micuenta-avatar">MS</div>
+        <div class="cliente-info">
+          <h2 id="micuenta-nombre">—</h2>
+          <p class="muted" id="micuenta-telefono">—</p>
+        </div>
+        <div class="cliente-actions">
+          <span class="badge badge-cliente"><span class="badge-dot"></span>Cliente</span>
+        </div>
+      </div>
+
+      <div class="cliente-summary panel">
+        <div class="cliente-summary-card">
+          <span class="muted">Total comprado</span>
+          <strong id="micuenta-total-comprado">$0.00</strong>
+        </div>
+        <div class="cliente-summary-card">
+          <span class="muted">Total pagado</span>
+          <strong id="micuenta-total-pagado">$0.00</strong>
+        </div>
+        <div class="cliente-summary-card">
+          <span class="muted">Saldo pendiente</span>
+          <strong id="micuenta-saldo-pendiente">$0.00</strong>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Resumen de mi deuda</h3>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Producto</th><th>Precio</th><th>Pagado</th><th>Pendiente</th></tr></thead>
+            <tbody id="micuenta-deuda-body"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="micuenta-deuda-empty" hidden>¡No tienes deudas pendientes!</p>
+      </div>
+
+      <div class="dashboard-columns">
+        <div class="panel">
+          <div class="panel-head"><h3>Mis compras</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Producto</th><th>Precio</th><th>Fecha</th></tr></thead>
+              <tbody id="micuenta-compras-body"></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="micuenta-compras-empty" hidden>Aún no hay compras registradas.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Mis pagos</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Concepto</th><th>Pago</th><th>Estado</th><th>Fecha</th></tr></thead>
+              <tbody id="micuenta-pagos-body"></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="micuenta-pagos-empty" hidden>Aún no hay pagos registrados.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- VISTA: USUARIOS (admin) ---------- -->
+    <section class="view" id="view-usuarios">
+      <div class="view-toolbar">
+        <p class="muted">Crea y administra los accesos de tus clientes al portal.</p>
+        <button class="btn btn-primary" id="btn-nuevo-usuario">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
+          Nuevo acceso
+        </button>
+      </div>
+      <div class="panel">
+        <div class="table-wrap">
+          <table class="responsive-table">
+            <thead><tr><th>Usuario</th><th>Rol</th><th>Cliente vinculado</th><th>Creado</th><th></th></tr></thead>
+            <tbody id="usuarios-body"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="usuarios-empty" hidden>No hay usuarios registrados.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MODAL GENÉRICO ===================== -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Título</h3>
+      <button class="modal-close" id="modal-close">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
