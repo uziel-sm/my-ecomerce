@@ -291,7 +291,7 @@ body.rol-cliente .drawer-item.nav-cliente { display: flex; }
   border: 1px solid var(--linea); box-shadow: var(--sombra);
 }
 .trend-panel {
-  display: none;
+  display: block;
 }
 .overview-panel .panel-head { padding: 0 0 20px 0; }
 .overview-panel .panel-head h3 { font-size: 20px; }
