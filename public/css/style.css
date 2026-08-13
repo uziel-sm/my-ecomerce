@@ -228,7 +228,7 @@ body.rol-cliente .drawer-item.nav-cliente { display: flex; }
   border: none; color: #fff;
   padding: 14px 16px; font-size: 14px; font-weight: 600;
   cursor: pointer; border-top: 1px solid rgba(255,255,255,.1);
-  flex-shrink: 0;
+  flex-shrink: 0; margin-top: 0;
 }
 .drawer-logout svg { width: 18px; height: 18px; fill: currentColor; }
 .drawer-logout:hover { background: rgba(255,255,255,.15); }
