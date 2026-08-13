@@ -31,6 +31,12 @@ async function api(path, options = {}) {
     mostrarLogin();
     throw new Error(data?.error || 'Sesión expirada');
   }
+  if (res.status === 403 && state.usuario?.rol === 'cliente' && path !== '/auth/mi-cuenta') {
+    // Un cliente no debe poder consumir rutas de administración
+    toast('No tienes permisos para esta acción', 'error');
+    if (state.view !== 'micuenta') mostrarVista('micuenta');
+    throw new Error(data?.error || 'No tienes permisos para esta acción');
+  }
   if (!res.ok) throw new Error(data?.error || 'Ocurrió un error inesperado');
   return data;
 }
@@ -206,7 +212,15 @@ const TITULOS = {
   micuenta: ['Mi cuenta', 'Consulta tu historial de compras y pagos']
 };
 
+// Vistas exclusivas del administrador (el cliente solo puede ver 'micuenta')
+const VISTAS_ADMIN = ['dashboard', 'clientes', 'cliente-detalle', 'ventas', 'pagos', 'usuarios'];
+
 function mostrarVista(nombre) {
+  // Bloquear a un cliente que intente abrir una vista de administrador
+  if (state.usuario?.rol === 'cliente' && VISTAS_ADMIN.includes(nombre)) {
+    toast('No tienes permisos para esta sección', 'error');
+    nombre = 'micuenta';
+  }
   state.view = nombre;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById(`view-${nombre}`).classList.add('active');
