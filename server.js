@@ -45,6 +45,11 @@ app.use('/api/ventas', adminApi, require('./routes/ventas'));
 app.use('/api/pagos', adminApi, require('./routes/pagos'));
 app.use('/api/dashboard', adminApi, require('./routes/dashboard'));
 
+// GET /logout -> cerrar sesión (menú móvil): destruye la sesión y vuelve a la portada
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => res.redirect('/'));
+});
+
 app.get('/{*splat}', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

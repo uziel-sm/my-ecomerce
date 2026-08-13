@@ -13,7 +13,8 @@ const state = {
   filtroPagos: '',
   busqueda: '',
   busquedaVentas: '',
-  busquedaPagos: ''
+  busquedaPagos: '',
+  menuDrawerAbierto: false
 };
 
 // --------------------------------------------------------------------------
@@ -108,8 +109,6 @@ function entrarApp(usuario) {
   state.usuario = usuario;
   document.body.classList.remove('no-auth');
   document.body.classList.toggle('rol-cliente', usuario.rol === 'cliente');
-  document.getElementById('user-chip-name').textContent = usuario.nombre || usuario.username;
-  document.getElementById('user-chip-rol').textContent = usuario.rol === 'admin' ? 'Administrador' : 'Cliente';
   mostrarVista(usuario.rol === 'cliente' ? 'micuenta' : 'dashboard');
 }
 
@@ -148,6 +147,53 @@ document.getElementById('login-password')?.addEventListener('keydown', (e) => {
 document.getElementById('btn-logout')?.addEventListener('click', logout);
 
 // --------------------------------------------------------------------------
+// Menú lateral (drawer) en móvil
+// --------------------------------------------------------------------------
+function abrirMenuDrawer() {
+  const drawer = document.getElementById('menu-drawer');
+  drawer.classList.add('open');
+  document.getElementById('hamburger-btn').classList.add('active');
+  state.menuDrawerAbierto = true;
+}
+
+function cerrarMenuDrawer() {
+  const drawer = document.getElementById('menu-drawer');
+  drawer.classList.remove('open');
+  document.getElementById('hamburger-btn').classList.remove('active');
+  state.menuDrawerAbierto = false;
+}
+
+// Botón hamburguesa
+document.getElementById('hamburger-btn')?.addEventListener('click', () => {
+  if (state.menuDrawerAbierto) cerrarMenuDrawer();
+  else abrirMenuDrawer();
+});
+
+// Ítems del menú drawer
+document.querySelectorAll('.drawer-item').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.drawer-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    mostrarVista(btn.dataset.view);
+    cerrarMenuDrawer();
+  });
+});
+
+// Cerrar sesión desde el drawer
+document.getElementById('drawer-logout').addEventListener('click', () => {
+  cerrarMenuDrawer(); // Cierra el menú primero
+  toast('Sesión cerrada', 'success');
+  setTimeout(() => {
+    logout(); // destruye la sesión en el servidor y muestra el login (sin recargar la página)
+  }, 800);
+});
+
+// Cerrar el menú al hacer clic fuera (sobre el fondo oscuro)
+document.getElementById('menu-drawer')?.addEventListener('click', (e) => {
+  if (e.target.id === 'menu-drawer') cerrarMenuDrawer();
+});
+
+// --------------------------------------------------------------------------
 // Navegación entre vistas
 // --------------------------------------------------------------------------
 const TITULOS = {
@@ -169,13 +215,6 @@ function mostrarVista(nombre) {
   const navKey = nombre === 'cliente-detalle' ? 'clientes' : nombre;
   document.querySelector(`.nav-item[data-view="${navKey}"]`)?.classList.add('active');
 
-  const [titulo, sub] = TITULOS[nombre];
-  document.getElementById('view-title').textContent = titulo;
-  document.getElementById('view-subtitle').textContent = sub;
-
-  const showSearch = nombre === 'clientes';
-  document.getElementById('topbar-search-wrap').style.visibility = showSearch ? 'visible' : 'hidden';
-
   if (nombre === 'dashboard') cargarDashboard();
   if (nombre === 'clientes') cargarClientes();
   if (nombre === 'ventas') cargarVentas();
@@ -188,7 +227,7 @@ document.querySelectorAll('.nav-item').forEach(btn => {
   btn.addEventListener('click', () => mostrarVista(btn.dataset.view));
 });
 
-document.getElementById('topbar-search').addEventListener('input', (e) => {
+document.getElementById('clientes-buscar').addEventListener('input', (e) => {
   state.busqueda = e.target.value;
   if (state.view === 'clientes') cargarClientes();
 });
@@ -276,7 +315,8 @@ async function cargarDashboard() {
 // CLIENTES
 // ============================================================================
 async function cargarClientes() {
-  const q = state.busqueda ? `?q=${encodeURIComponent(state.busqueda)}` : '';
+  let q = document.getElementById('clientes-buscar') ? document.getElementById('clientes-buscar').value : '';
+  if (q) q = `?q=${encodeURIComponent(q)}`; else q = '';
   const clientes = await api(`/clientes${q}`);
   const tbody = document.getElementById('clientes-body');
   const vacio = document.getElementById('clientes-empty');
@@ -1078,13 +1118,13 @@ async function cargarUsuarios() {
 
   tbody.innerHTML = usuarios.map(u => `
     <tr>
-      <td class="cell-strong">${u.username}</td>
-      <td>${u.rol === 'admin'
+      <td class="cell-strong" data-label="Usuario">${u.username}</td>
+      <td data-label="Rol">${u.rol === 'admin'
         ? '<span class="badge badge-abono"><span class="badge-dot"></span>Administrador</span>'
         : '<span class="badge badge-cliente"><span class="badge-dot"></span>Cliente</span>'}</td>
-      <td>${u.rol === 'cliente' ? `${u.cliente_nombre || '—'} <span class="cell-sub">${u.cliente_telefono || ''}</span>` : '<span class="muted">—</span>'}</td>
-      <td>${formatFecha(u.creado_en)}</td>
-      <td>
+      <td data-label="Cliente">${u.rol === 'cliente' ? `${u.cliente_nombre || '—'} <span class="cell-sub">${u.cliente_telefono || ''}</span>` : '<span class="muted">—</span>'}</td>
+      <td data-label="Creado">${formatFecha(u.creado_en)}</td>
+      <td data-label="Acciones">
         <div class="row-actions">
           ${u.rol === 'cliente' ? `
           <button class="icon-btn" title="Cambiar contraseña" data-accion="pass-usuario" data-id="${u.id}">
