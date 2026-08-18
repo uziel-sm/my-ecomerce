@@ -59,7 +59,7 @@ button { cursor: pointer; }
 
 /* ------------------------------ SIDEBAR ------------------------------ */
 .sidebar {
-  background: linear-gradient(165deg, var(--naranja-700) 0%, var(--naranja-900) 100%);
+  background: linear-gradient(165deg, #F5760F 0%, #E85D0C 40%, #C8420A 100%);
   color: #fff;
   padding: 28px 20px;
   display: flex;
@@ -84,14 +84,14 @@ button { cursor: pointer; }
 .nav { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
 .nav-item {
   display: flex; align-items: center; gap: 12px;
-  background: transparent; border: none; color: rgba(255,255,255,.82);
-  padding: 12px 14px; border-radius: var(--radio-s);
-  font-size: 14.5px; font-weight: 500; text-align: left;
+  background: rgba(255,255,255,0.08); border: none; border-bottom: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,.82);
+  padding: 14px 20px; border-radius: 0;
+  font-size: 15px; font-weight: 500; text-align: left;
   transition: background .15s ease, color .15s ease;
 }
-.nav-item svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
-.nav-item:hover { background: rgba(255,255,255,.12); color: #fff; }
-.nav-item.active { background: #fff; color: var(--naranja-700); font-weight: 600; box-shadow: 0 6px 16px rgba(0,0,0,.15); }
+.nav-item svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
+.nav-item:hover { background: rgba(255,255,255,0.18); color: #fff; }
+.nav-item.active { background: #fff; color: var(--naranja-700); font-weight: 700; }
 
 .sidebar-footer { margin-top: 0; padding: 16px 8px 4px; border-top: 1px solid rgba(255,255,255,.18); }
 .sidebar-footer p { margin: 12px 0 2px; font-weight: 600; font-size: 13px; }
@@ -118,7 +118,8 @@ button { cursor: pointer; }
 /* ============================== NAVBAR FIJO ============================== */
 .navbar {
   position: fixed; top: 0; left: 0; right: 0;
-  background: linear-gradient(135deg, var(--naranja-500), var(--naranja-700));
+  background: linear-gradient(135deg, #FF8B2D 0%, #E85D0C 50%, #C8420A 100%);
+  backdrop-filter: blur(8px);
   height: 60px; display: flex; align-items: center; justify-content: space-between;
   padding: 0 16px; box-shadow: 0 4px 12px rgba(200,66,10,.2);
   z-index: 100;
@@ -177,27 +178,78 @@ button { cursor: pointer; }
   .navbar { height: 56px; padding: 0 12px; }
   .navbar-logo { width: 32px; height: 32px; font-size: 12px; }
   .navbar-title { font-size: 13px; }
+  .menu-drawer { top: 56px; height: calc(100vh - 56px); background: rgba(43,33,24,.12); }
+  .drawer-nav {
+    width: min(72vw, 330px);
+    height: calc(100vh - 56px);
+    box-shadow: 10px 0 18px rgba(43,33,24,.12);
+    background: linear-gradient(180deg, #F67C1F 0%, #E85D0C 42%, #D74F09 100%);
+  }
+  .drawer-header {
+    min-height: 52px; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,.16);
+  }
+  .drawer-brand-badge { width: 22px; height: 22px; font-size: 9px; border-radius: 6px; }
+  .drawer-brand-title { font-size: 14px; }
+  .drawer-item, .drawer-logout {
+    padding: 13px 16px; font-size: 13px; min-height: 44px;
+  }
+  .drawer-item svg, .drawer-logout svg { width: 15px; height: 15px; }
 }
 
 /* ============================== MENÚ LATERAL (móvil) ============================== */
 
 .menu-drawer {
-  display: none; position: fixed; top: 0; left: 0;
-  width: 100%; height: 100vh; background: rgba(0,0,0,.4);
-  z-index: 150; transition: opacity .3s ease; opacity: 0;
-  pointer-events: none;
+  position: fixed; top: 60px; left: 0; right: 0;
+  width: 100%; height: calc(100vh - 60px);
+  background: rgba(43,33,24,.12);
+  z-index: 140; opacity: 0; pointer-events: none;
+  transition: opacity .2s ease;
+  display: block;
 }
 .menu-drawer.open {
-  display: flex; flex-direction: column; align-items: flex-start;
   opacity: 1; pointer-events: auto;
 }
 
 .drawer-nav {
   display: flex; flex-direction: column; gap: 0;
-  background: linear-gradient(165deg, var(--naranja-700) 0%, var(--naranja-900) 100%);
-  width: 280px; max-width: 100%;
-  flex: 1 1 auto; min-height: 0; overflow-y: auto;
-  animation: slideIn .3s ease;
+  background: linear-gradient(180deg, #F67C1F 0%, #E85D0C 42%, #C8420A 100%);
+  width: min(66.66vw, 420px);
+  max-width: 100%;
+  height: calc(100vh - 60px);
+  min-height: 0;
+  overflow-y: auto;
+  box-shadow: 12px 0 28px rgba(43,33,24,.12);
+  border-right: 1px solid rgba(255,255,255,.08);
+  position: relative;
+  transform: translateX(-105%);
+  transition: transform .25s ease;
+}
+.menu-drawer.open .drawer-nav {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+  min-height: 58px;
+}
+
+.drawer-brand-badge {
+  width: 24px; height: 24px; border-radius: 8px;
+  background: rgba(255,255,255,.92);
+  color: var(--naranja-700);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  font-family: var(--fuente-display);
+  flex-shrink: 0;
+}
+
+.drawer-brand-title {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 @keyframes slideIn {
@@ -206,15 +258,16 @@ button { cursor: pointer; }
 }
 
 .drawer-item {
-  display: flex; align-items: center; gap: 14px;
-  background: none; border: none; color: #fff;
-  padding: 14px 16px; font-size: 15px; font-weight: 500;
+  display: flex; align-items: center; gap: 12px;
+  background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,.08); color: #fff;
+  padding: 14px 18px; font-size: 14px; font-weight: 500;
   text-align: left; cursor: pointer;
-  border-bottom: 1px solid rgba(255,255,255,.1);
+  border-radius: 0;
+  min-height: 48px;
 }
-.drawer-item svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
-.drawer-item:hover { background: rgba(255,255,255,.1); }
-.drawer-item.active { background: rgba(255,255,255,.15); color: #fff; }
+.drawer-item svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+.drawer-item:hover { background: rgba(255,255,255,0.08); }
+.drawer-item.active { background: rgba(255,255,255,0.08); color: #fff; font-weight: 600; }
 
 /* Visibilidad por rol en el drawer (reutiliza el patrón del sidebar) */
 .drawer-item.nav-cliente { display: none; }
@@ -222,16 +275,15 @@ body.rol-cliente .drawer-item.nav-admin { display: none; }
 body.rol-cliente .drawer-item.nav-cliente { display: flex; }
 
 .drawer-logout {
-  width: 280px; max-width: 100%;
+  width: 100%; max-width: 100%;
   display: flex; align-items: center; gap: 12px;
-  background: linear-gradient(165deg, var(--naranja-700) 0%, var(--naranja-900) 100%);
-  border: none; color: #fff;
-  padding: 14px 16px; font-size: 14px; font-weight: 600;
-  cursor: pointer; border-top: 1px solid rgba(255,255,255,.1);
+  background: transparent; border: none; color: #fff;
+  padding: 14px 18px; font-size: 14px; font-weight: 600;
+  cursor: pointer; border-top: 1px solid rgba(255,255,255,.08);
   flex-shrink: 0; margin-top: 0;
 }
-.drawer-logout svg { width: 18px; height: 18px; fill: currentColor; }
-.drawer-logout:hover { background: rgba(255,255,255,.15); }
+.drawer-logout svg { width: 16px; height: 16px; fill: currentColor; }
+.drawer-logout:hover { background: rgba(255,255,255,.08); }
 
 /* ============================== VIEWS ============================== */
 .view { display: none; animation: fadeIn .25s ease; }
@@ -260,7 +312,7 @@ body.rol-cliente .drawer-item.nav-cliente { display: flex; }
   max-width: 100%; width: 100%;
 }
 
-/* Toolbar naranja en Clientes (mismo diseño que Ventas) */
+/* Toolbar naranja en Clientes */
 #view-clientes .view-toolbar {
   background: linear-gradient(135deg, var(--naranja-500), var(--naranja-700));
   padding: 20px 22px; border-radius: var(--radio-m); margin-bottom: 22px;
@@ -272,7 +324,49 @@ body.rol-cliente .drawer-item.nav-cliente { display: flex; }
   border: none; font-size: 14px;
 }
 #view-clientes #btn-nuevo-cliente {
-  margin-top: 14px; align-self: flex-start;
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 22px;
+  align-self: flex-start;
+  display: inline-flex;
+  justify-content: center;
+  min-width: 180px;
+  max-width: max-content;
+}
+#view-clientes #btn-nuevo-cliente::after {
+  content: "";
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  top: calc(100% + 8px);
+  height: 16px;
+  background: transparent;
+  border-radius: 0 0 12px 12px;
+  z-index: -1;
+}
+
+#view-usuarios .view-toolbar .btn,
+#view-clientes #btn-nuevo-cliente {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+#view-usuarios #btn-nuevo-usuario {
+  position: relative;
+  margin-bottom: 14px;
+}
+#view-usuarios #btn-nuevo-usuario::after {
+  content: "";
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  top: calc(100% + 8px);
+  height: 16px;
+  background: transparent;
+  border-radius: 0 0 12px 12px;
+  z-index: -1;
 }
 
 /* ============================== CARDS (dashboard) ============================== */
@@ -676,7 +770,10 @@ tbody tr.clickable { cursor: pointer; }
   .panel-head h3 { font-size: 16px; }
   .pill { font-size: 12px; }
 
-  .drawer-nav { width: 100%; }
+  .drawer-nav {
+    width: min(72vw, 330px);
+    height: calc(100vh - 56px);
+  }
   .drawer-logout { width: 100%; }
   .hamburger-btn { width: 28px; height: 28px; }
 }
